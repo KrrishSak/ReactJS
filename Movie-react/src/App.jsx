@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Search from './Components/Search'
 import Spinner from './Components/Spinner'
 import MovieCard from './Components/MovieCard'
+import {useDebounce} from 'react-use'
+import { updateSearchCount } from './appwrite'
 
 const API_REST_URL="https://api.themoviedb.org/3"
 
@@ -19,17 +21,18 @@ const App = () => {
   const [error, setError] = useState('');
   const[movies, setmovies] = useState([]);
   const[isLoading, setisLoading] = useState(false);
+  const [DebouncedSearch, setDebouncedSearch] = useState('')
 
-  const fetchmovies = async() => {
+  useDebounce(() => setDebouncedSearch(searchTerm), 500,[searchTerm])
+
+  const fetchmovies = async(query = '') => {
     setisLoading(true);
     setError('');
     try{
-      const endpoint = `${API_REST_URL}/discover/movie?sort_by=popularity.desc` 
+      const endpoint = query ? `${API_REST_URL}/search/movie?query=${encodeURIComponent(query)}` : `${API_REST_URL}/discover/movie?sort_by=popularity.desc` 
       const response = await fetch(endpoint,API_OPTIONS);
 
-      if(!response.ok){
-        throw new Error("Error fetching movies");
-      }
+      
       const data = await response.json();
       if(data.response === "False"){
         setError(data.error || 'Failed to fetch movies');
@@ -37,6 +40,10 @@ const App = () => {
         return;   
       }
       setmovies(data.results || []);
+     
+      if(query && data.results.length>0){
+        await updateSearchCount(query, data.results[0])
+      }
     }
     catch(error){
       console.error("Error Occured, Please try again")
@@ -46,9 +53,11 @@ const App = () => {
       setisLoading(false);
     }
   }
+
   useEffect(() => {
-    fetchmovies();
-  },[])
+    fetchmovies(DebouncedSearch);
+  },[DebouncedSearch])
+
   return (
     <main>
       <div className="pattern">
@@ -61,7 +70,23 @@ const App = () => {
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
         
+        <section className='trending'>
+
+          <h2 className='mt-[20px]'> Trending </h2>
+          {isLoading ? (
+            <Spinner />
+          ): error? (
+            <p className="text-red-500">{error}</p>
+          ): <ul>
+              {movies.map((movie) => (
+               <MovieCard key={movie.id} movie={movie}   />
+              ))}
+            </ul>}
+
+          </section>
+
         <section className='all-movies'>
+
           <h2 className='mt-[20px]'> All Movies </h2>
           {isLoading ? (
             <Spinner />
@@ -72,6 +97,7 @@ const App = () => {
                <MovieCard key={movie.id} movie={movie}   />
               ))}
             </ul>}
+
         </section>
       </div>
     </main>
