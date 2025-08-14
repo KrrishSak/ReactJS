@@ -1,12 +1,82 @@
-# React + Vite
+# React Movies App 🎬
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern movie discovery web application built with **React**, **TMDB API**, and **Appwrite**. Users can search for movies, view trending movies, and the app keeps track of the most searched movies using Appwrite's database.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- 🔍 **Movie Search** – Search movies by name using **TMDB API**.
+- 📈 **Trending Movies** – Shows the top trending movies based on user search counts.
+- 🎨 **Responsive UI** – Clean and minimal interface with loading states and error handling.
+- 🗄️ **Appwrite Integration** – Stores search counts, movie IDs, and poster URLs.
+- ⏱️ **Debounced Search** – Optimized search to reduce API calls.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Screenshots
+
+![App Screenshot](C:\Users\sakhu\Pictures\Screenshots\movie1)  
+
+---
+
+## Tech Stack
+
+- **Frontend:** React, JavaScript, Tailwind CSS
+- **Backend / Database:** Appwrite
+- **API:** [TMDB API](https://www.themoviedb.org/)
+- **Utilities:** react-use (for `useDebounce`)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 18
+- npm or yarn
+- Appwrite account and project
+- TMDB API key
+
+### Installation
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/yourusername/react-movies.git
+cd react-movies
+```
+2. Install dependencies:
+```bash
+VITE_TMDB_API_KEY=your_tmdb_api_key
+VITE_APPWRITE_PROJECT_ID=your_appwrite_project_id
+VITE_APPWRITE_DATABASE_ID=your_appwrite_database_id
+VITE_APPWRITE_COLLECTION_ID=your_appwrite_collection_id
+
+```
+3. Create a .env file in the root and add your keys:
+```bash
+npm install
+# or
+yarn install
+```
+4. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+## Appwrite Setup
+1. Create a database in your Appwrite project.
+2. Create a collection with these attributes:
+  searchTerm (string, required)
+  movie_id (integer, required)
+  poster_URL (string / URL, required)
+  count (integer, default 1)
+
+4. Update .env with your Database ID and Collection ID.
+
+
+Author
+Krish Sakhuja
