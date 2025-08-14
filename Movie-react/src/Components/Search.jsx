@@ -5,7 +5,7 @@ const Search = ({ searchTerm, setSearchTerm }) => {
     <div className="search">
       <div>
         <img src='search.png' alt='search'></img>
-          <input type='text' placeholder='Manu Loves Krish' 
+          <input type='text' placeholder='Search Through 10,000+ Movies!' 
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
 
