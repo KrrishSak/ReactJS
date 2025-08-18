@@ -16,7 +16,9 @@ A modern movie discovery web application built with **React**, **TMDB API**, and
 
 ## Screenshots
 
-![App Screenshot](C:\Users\sakhu\Pictures\Screenshots\movie1)  
+<img width="1515" height="925" alt="react1" src="https://github.com/user-attachments/assets/1fecf1b9-c48e-4a97-b68b-fd65161b2aa2" />
+<img width="1470" height="906" alt="react2" src="https://github.com/user-attachments/assets/f3456168-e4d0-46dd-b295-0cd907ed9612" />
+<img width="1257" height="835" alt="react3" src="https://github.com/user-attachments/assets/eb2be720-54af-4f98-8247-f434beed73d2" />
 
 ---
 
